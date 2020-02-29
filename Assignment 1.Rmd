@@ -1,0 +1,85 @@
+---
+title: "R Notebook"
+output: pdf_document
+---
+
+```{r}
+library(glmnet)
+library(ISLR)
+library(dplyr)
+SafeBabies <- Carseats %>% select("Sales", "Price", "ShelveLoc")
+Good<-subset(SafeBabies, ShelveLoc=="Good")
+Medium<-subset(SafeBabies, ShelveLoc=="Medium")
+Bad<-subset(SafeBabies, ShelveLoc=="Bad")
+```
+
+```{r}
+#Defining the Formula for the regressions
+formula=Sales~Price
+```
+
+```{r}
+#Determining The Optimal Price For Good Shelf Locations
+Good_Model <- glm(formula = formula, family = "gaussian", data = Good)
+Coeff_Good<-data.frame(Good_Model$coefficients, stringsAsFactors = TRUE)
+Left_Good <- matrix(c(-2*Coeff_Good[c(2), ]),nrow=1,ncol=1)
+Right_Good <- matrix(c(Coeff_Good[c(2), ]*55 +Coeff_Good[c(1), ]),nrow=1,ncol=1)
+solve(Left_Good, Right_Good)
+```
+2*Coeff_Good[c(2), ]
+Coeff_Good[c(2), ]*.55 +Coeff_Good[c(1), ]
+```{r}
+#Determining The Optimal Price For Medium Shelf Locations
+Medium_Model <- glm(formula = formula, family = "gaussian", data = Medium)
+Coeff_Medium<-data.frame(Medium_Model$coefficients, stringsAsFactors = TRUE)
+Left_Medium <- matrix(c(-2*Coeff_Medium[c(2), ]),nrow=1,ncol=1)
+Right_Medium <- matrix(c(Coeff_Medium[c(2), ]*55 +Coeff_Medium[c(1), ]),nrow=1,ncol=1)
+solve(Left_Medium, Right_Medium)
+```
+
+```{r}
+#Determining The Optimal Price For Bad Shelf Locations
+Bad_Model <- glm(formula = formula, family = "gaussian", data = Bad)
+Coeff_Bad<-data.frame(Bad_Model$coefficients, stringsAsFactors = TRUE)
+Left_Bad <- matrix(c(-2*Coeff_Bad[c(2), ]),nrow=1,ncol=1)
+Right_Bad <- matrix(c(Coeff_Bad[c(2), ]*55 +Coeff_Bad[c(1), ]),nrow=1,ncol=1)
+solve(Left_Bad, Right_Bad)
+```
+
+```{r}
+#Plotting the Optimal Shelf Locations When Production Costs Vary For Good, Medium, and Bad Locations
+#Good Locations
+Good_Prices <- data.frame()
+data<- c()
+v <- c(40:85)
+for ( i in v) {
+  Left_Good <- matrix(c(-2*Coeff_Good[c(2), ]),nrow=1,ncol=1)
+Right_Good <- matrix(c(Coeff_Good[c(2), ]*i +Coeff_Good[c(1), ]),nrow=1,ncol=1)
+value<-solve(Left_Good, Right_Good) 
+  data<-append(data, value)
+}
+Good_Prices$Production_Costs<-v
+Good_Prices$Optimal_Prices<-data
+```
+
+```{r}
+#Plotting the Optimal Shelf Locations When Production Costs Vary For Good, Medium, and Bad Locations
+#Medium Locations
+Good_Prices <- data.frame()
+data<- c()
+v <- c(40:85)
+for ( i in v) {
+  Left_Good <- matrix(c(-2*Coeff_Good[c(2), ]),nrow=1,ncol=1)
+Right_Good <- matrix(c(Coeff_Good[c(2), ]*i +Coeff_Good[c(1), ]),nrow=1,ncol=1)
+value<-solve(Left_Good, Right_Good) 
+  data<-append(data, value)
+}
+Good_Prices$Production_Costs<-v
+Good_Prices$Optimal_Prices<-data
+```
+
+```{r}
+#Plotting the Optimal Shelf Locations When Production Costs Vary For Good, Medium, and Bad Locations\
+#Bad Locations
+
+```
