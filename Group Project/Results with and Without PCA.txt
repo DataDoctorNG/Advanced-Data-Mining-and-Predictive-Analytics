@@ -1,0 +1,25 @@
+Regression
+Without PCA
+Train Root Mean Squared Error: 3.2541066494705726 Train R^2: 0.9231895738022162
+
+Test Root Mean Squared Error: 8.878500455766854 Test R^2: 0.39443747216177416
+
+With PCA
+Train Root Mean Squared Error: 3.961810366517451 Train R^2: 0.8861471311659632
+
+Test Root Mean Squared Error: 9.928317492388537 Test R^2: 0.24276432879729526
+
+Classification
+Without PCA
+Accuracy of the model on training set: 0.95
+Accuracy of the model on test set: 0.91
+
+AUC of the model on training set: 0.98
+AUC of the model on test set: 0.69
+
+With PCA
+Accuracy of the model on training set: 0.84
+Accuracy of the model on test set: 0.70
+
+AUC of the model on training set: 0.92
+AUC of the model on test set: 0.62

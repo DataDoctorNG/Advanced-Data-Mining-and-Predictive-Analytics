@@ -1,0 +1,15 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+#Implementation of the Association Rules Package
+library(arules)
+Groceries<-read.transactions(file="groceries_v2.csv", rm.duplicates= FALSE, format="basket",sep=",",cols=1)
+Groceries@itemInfo$labels <- gsub("\"","",Groceries@itemInfo$labels)
+grocery_rules <- apriori(Groceries, parameter = list(support = 0.01, confidence = 0.5))
+inspect(grocery_rules)
+
+```
+
